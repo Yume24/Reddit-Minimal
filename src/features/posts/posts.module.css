@@ -1,0 +1,6 @@
+.content {
+    max-height: 500px;
+    object-fit: contain;
+    object-position: center;
+    background-color: black;
+}

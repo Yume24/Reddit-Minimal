@@ -1,0 +1,102 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import type { RootState } from "../../app/store.ts"
+
+type Post = {
+  title: string
+  author: string
+  subredditName: string
+  videoUrl: null | string
+  imageUrl: null | string
+}
+
+type PostsState = {
+  posts: Post[]
+  isLoading: boolean
+  hasError: boolean
+}
+type RedditAPIResponse = {
+  data: {
+    children: {
+      data: {
+        title: string
+        author_fullname: string
+        subreddit_name_prefixed: string
+        media: null | {
+          reddit_video: {
+            fallback_url: string
+          }
+        }
+        preview: null | {
+          images: {
+            source: {
+              url: string
+            }
+          }[]
+        }
+      }
+    }[]
+  }
+}
+const initialState: PostsState = {
+  posts: [],
+  isLoading: false,
+  hasError: false,
+}
+
+function parseData(jsonData: RedditAPIResponse): Post[] {
+  return jsonData.data.children.map(post => {
+    return {
+      title: post.data.title,
+      author: post.data.author_fullname,
+      subredditName: post.data.subreddit_name_prefixed,
+      videoUrl: post.data.media?.reddit_video.fallback_url.replaceAll("&amp;", "&") ?? null,
+      imageUrl: post.data.preview?.images[0]?.source?.url.replaceAll("&amp;", "&") ?? null,
+    }
+  })
+}
+
+export const fetchPosts = createAsyncThunk<
+  Post[],
+  string,
+  { rejectValue: string }
+>("posts/fetchPosts", async (query, { rejectWithValue }) => {
+  const url = query
+    ? `https://www.reddit.com/search.json?q=${query.replace(" ", "%20")}`
+    : "https://www.reddit.com/r/popular.json"
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      return rejectWithValue("Error loading posts")
+    }
+    const json = (await response.json()) as RedditAPIResponse
+    return parseData(json)
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return rejectWithValue(`Error: ${error.message}`)
+    }
+    return rejectWithValue("Unknown error occurred")
+  }
+})
+
+const postsSlice = createSlice({
+  name: "posts",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(fetchPosts.pending, state => {
+      state.isLoading = true
+      state.hasError = false
+    })
+    builder.addCase(fetchPosts.rejected, state => {
+      state.isLoading = false
+      state.hasError = true
+    })
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.hasError = false
+      state.posts = action.payload
+    })
+  },
+})
+export const postsSelector = (state: RootState) => state.posts
+export default postsSlice

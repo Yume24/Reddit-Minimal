@@ -1,6 +1,7 @@
 import './App.css'
 import Navbar from "./components/Navbar";
 import TrendingCommunities from "./features/communities/TrendingCommunities.tsx"
+import Posts from "./features/posts/Posts.tsx"
 
 function App() {
   return (<>
@@ -12,8 +13,8 @@ function App() {
       </div>
       <div className="row gx-3 gy-3">
         <div className="col-12 col-lg-9">
-          <div className="bg-white shadow rounded-bottom">
-            s
+          <div className="bg-white shadow rounded-bottom p-5">
+            <Posts />
           </div>
         </div>
         <div className="col-12 col-lg-3">
