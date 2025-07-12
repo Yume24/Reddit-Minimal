@@ -21,12 +21,12 @@ type RedditAPIResponse = {
         title: string
         author_fullname: string
         subreddit_name_prefixed: string
-        media: null | {
-          reddit_video: {
+        media: undefined | {
+          reddit_video: undefined | {
             fallback_url: string
           }
         }
-        preview: null | {
+        preview: undefined | {
           images: {
             source: {
               url: string
@@ -49,8 +49,8 @@ function parseData(jsonData: RedditAPIResponse): Post[] {
       title: post.data.title,
       author: post.data.author_fullname,
       subredditName: post.data.subreddit_name_prefixed,
-      videoUrl: post.data.media?.reddit_video.fallback_url.replaceAll("&amp;", "&") ?? null,
-      imageUrl: post.data.preview?.images[0]?.source?.url.replaceAll("&amp;", "&") ?? null,
+      videoUrl: post.data.media?.reddit_video?.fallback_url.replaceAll("&amp;", "&") ?? null,
+      imageUrl: post.data.preview?.images[0].source.url.replaceAll("&amp;", "&") ?? null,
     }
   })
 }

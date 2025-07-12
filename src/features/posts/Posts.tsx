@@ -18,9 +18,11 @@ export default function Posts() {
     <>
       {isSearch ? <h3>Search results for: "{searchTerm}"</h3> : null}
       {isLoading ? (
-        hasError ? null : (
-          <PostsLoading />
-        )
+        <PostsLoading />
+      ) : hasError ? (
+        <p className="text-danger text-center fw-bold">
+          There was an error loading posts!
+        </p>
       ) : (
         <>
           {posts.map((post, index) => (
