@@ -1,18 +1,26 @@
 import {useState} from "react";
 import type React from "react"
+import { useAppDispatch } from "../../app/hooks.ts";
+import { fetchPosts } from "../posts/postsSlice.ts";
+import { setIsSearch, setSearch } from "./searchSlice.ts"
 
 export default function SearchForm() {
     const [input, setInput] = useState('');
+    const dispatch = useAppDispatch();
     const handleChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         setInput(target.value);
     };
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        dispatch(setIsSearch(true));
+        dispatch(setSearch(input));
+        void dispatch(fetchPosts(`search.json?q=${input.replaceAll(" ", "%20")}`));
+        setInput("");
     };
     return (
         <form className="d-flex w-100" role="search" onSubmit={handleSubmit}>
             <input className="rounded-pill form-control me-2" type="search" placeholder="What's trending?"
-                   aria-label="Search" value={input} onChange={handleChange}/>
+                   aria-label="Search" value={input} onChange={handleChange} required={true}/>
             <button
                 className="w-25 justify-content-center btn rounded-pill btn-outline-success d-flex align-items-center"
                 type="submit">

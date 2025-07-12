@@ -61,7 +61,7 @@ export const fetchPosts = createAsyncThunk<
   { rejectValue: string }
 >("posts/fetchPosts", async (query, { rejectWithValue }) => {
   const url = query
-    ? `https://www.reddit.com/search.json?q=${query.replace(" ", "%20")}`
+    ? `https://www.reddit.com/${query.replace(" ", "%20")}`
     : "https://www.reddit.com/r/popular.json"
   try {
     const response = await fetch(url)
