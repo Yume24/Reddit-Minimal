@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import type { RootState } from "../../app/store";
+import type { RootState } from "../../app/store"
 
 type Community = {
   name: string
@@ -33,7 +33,11 @@ function parseData(jsonData: RedditAPIResponse): Community[] {
   })
 }
 
-export const fetchTrendingCommunities = createAsyncThunk<Community[], undefined, { rejectValue: string }>(
+export const fetchTrendingCommunities = createAsyncThunk<
+  Community[],
+  undefined,
+  { rejectValue: string }
+>(
   "trendingCommunities/fetchTrendingCommunities",
   async (_, { rejectWithValue }) => {
     const url = "https://www.reddit.com/subreddits/popular.json"
@@ -46,9 +50,9 @@ export const fetchTrendingCommunities = createAsyncThunk<Community[], undefined,
       return parseData(json)
     } catch (error: unknown) {
       if (error instanceof Error) {
-        return rejectWithValue(`Error: ${error.message}`);
+        return rejectWithValue(`Error: ${error.message}`)
       }
-      return rejectWithValue("Unknown error occurred");
+      return rejectWithValue("Unknown error occurred")
     }
   },
 )
@@ -79,5 +83,6 @@ const trendingCommunitiesSlice = createSlice({
     })
   },
 })
-export const trendingCommunitiesSelector = (state: RootState) => state.trendingCommunities;
+export const trendingCommunitiesSelector = (state: RootState) =>
+  state.trendingCommunities
 export default trendingCommunitiesSlice

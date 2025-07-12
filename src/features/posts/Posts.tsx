@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts"
 import { fetchPosts, postsSelector } from "./postsSlice.ts"
-import styles from "./posts.module.css"
 import PostsLoading from "./PostsLoading.tsx"
 import { motion } from "motion/react"
 import { searchSelector } from "../search/searchSlice.ts"
+import PostsError from "./PostsError.tsx"
+import PostMedia from "./PostMedia.tsx"
 
 export default function Posts() {
   const dispatch = useAppDispatch()
@@ -20,9 +21,7 @@ export default function Posts() {
       {isLoading ? (
         <PostsLoading />
       ) : hasError ? (
-        <p className="text-danger text-center fw-bold">
-          There was an error loading posts!
-        </p>
+        <PostsError />
       ) : (
         <>
           {posts.map((post, index) => (
@@ -40,20 +39,11 @@ export default function Posts() {
                   {post.author}
                 </h6>
               </div>
-              {post.imageUrl && !post.videoUrl ? (
-                <img
-                  className={`card-img-bottom ${styles.content}`}
-                  src={post.imageUrl}
-                  alt={`thumbnail of "${post.title}"`}
-                />
-              ) : null}
-              {post.videoUrl ? (
-                <video
-                  className={`card-img-bottom ${styles.content}`}
-                  src={post.videoUrl}
-                  controls
-                ></video>
-              ) : null}
+              <PostMedia
+                title={post.title}
+                videoUrl={post.videoUrl}
+                imageUrl={post.imageUrl}
+              />
             </motion.div>
           ))}
         </>
