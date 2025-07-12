@@ -11,7 +11,7 @@ function App() {
           <Navbar/>
         </div>
       </div>
-      <div className="row gx-3 gy-3">
+      <main className="row gx-3 gy-3">
         <div className="col-12 col-lg-9">
           <div className="bg-white shadow rounded-bottom p-5">
             <Posts />
@@ -22,7 +22,7 @@ function App() {
             <TrendingCommunities />
           </div>
         </div>
-      </div>
+      </main>
     </div>
   </>)
 }
