@@ -24,7 +24,7 @@ type RedditAPIResponse = {
 }
 
 function parseData(jsonData: RedditAPIResponse): Community[] {
-  return jsonData.data.children.map(community => {
+  return jsonData.data.children.filter((community) => community.data.icon_img).map(community => {
     return {
       name: community.data.display_name_prefixed,
       url: community.data.url,

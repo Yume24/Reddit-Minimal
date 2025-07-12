@@ -4,7 +4,7 @@ import TrendingCommunities from "./features/communities/TrendingCommunities.tsx"
 
 function App() {
   return (<>
-    <div className="container-fluid app">
+    <div className="container-fluid mb-5 app">
       <div className="row my-3">
         <div className="col">
           <Navbar/>
