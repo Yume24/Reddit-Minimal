@@ -38,6 +38,7 @@ export default function Posts() {
                 <h6 className="card-subtitle mb-2 text-body-secondary">
                   {post.author}
                 </h6>
+                <p className="card-text">{post.text}</p>
               </div>
               <PostMedia
                 title={post.title}

@@ -5,8 +5,9 @@ type Post = {
   title: string
   author: string
   subredditName: string
-  videoUrl: string | null
-  imageUrl: string | null
+  videoUrl?: string | null
+  imageUrl?: string
+  text: string | null
 }
 
 type PostsState = {
@@ -21,7 +22,8 @@ type RedditAPIResponse = {
         title: string
         author_fullname: string
         subreddit_name_prefixed: string
-        media?: {
+        selftext: string | null
+        media: null | {
           reddit_video?: {
             fallback_url: string
           }
@@ -49,12 +51,11 @@ function parseData(jsonData: RedditAPIResponse): Post[] {
       title: post.data.title,
       author: post.data.author_fullname,
       subredditName: post.data.subreddit_name_prefixed,
+      text: post.data.selftext,
       videoUrl:
-        post.data.media?.reddit_video?.fallback_url.replaceAll("&amp;", "&") ??
-        null,
+        post.data.media?.reddit_video?.fallback_url.replaceAll("&amp;", "&"),
       imageUrl:
-        post.data.preview?.images[0].source.url.replaceAll("&amp;", "&") ??
-        null,
+        post.data.preview?.images[0].source.url.replaceAll("&amp;", "&"),
     }
   })
 }

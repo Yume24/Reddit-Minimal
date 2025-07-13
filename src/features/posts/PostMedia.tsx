@@ -5,8 +5,8 @@ export default function PostMedia({
   videoUrl,
   title,
 }: {
-  imageUrl: string | null
-  videoUrl: string | null
+  imageUrl?: string
+  videoUrl?: string | null
   title: string
 }) {
   return (
