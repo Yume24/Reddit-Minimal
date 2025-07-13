@@ -26,7 +26,9 @@ export default function Post({
         <h6 className="card-subtitle mb-2 text-body-secondary">
           {post.author}
         </h6>
-        <p className={`card-text ${fadeText ? styles.fadingText : ""}`}>{post.text}</p>
+        <p className={`card-text ${fadeText ? styles.fadingText : ""}`}>
+          {post.text}
+        </p>
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center text-secondary">
             <svg

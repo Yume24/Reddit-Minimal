@@ -5,18 +5,23 @@ import PostsLoading from "./PostsLoading.tsx"
 import { searchSelector } from "../search/searchSlice.ts"
 import PostsError from "./PostsError.tsx"
 import Post from "./Post.tsx"
+import { Link } from "react-router"
 
 export default function Posts() {
   const dispatch = useAppDispatch()
   const { posts, isLoading, hasError } = useAppSelector(postsSelector)
   const { isSearch, searchTerm } = useAppSelector(searchSelector)
   useEffect(() => {
-    void dispatch(fetchPosts(""))
-  }, [dispatch])
+    if (posts.length === 0) {
+      void dispatch(fetchPosts(""))
+    }
+  }, [dispatch, posts])
 
   return (
     <>
-      {isSearch ? <h3 className="h3 mb-4">Search results for: "{searchTerm}"</h3> : null}
+      {isSearch ? (
+        <h3 className="h3 mb-4">Search results for: "{searchTerm}"</h3>
+      ) : null}
       {isLoading ? (
         <PostsLoading />
       ) : hasError ? (
@@ -24,7 +29,13 @@ export default function Posts() {
       ) : (
         <>
           {posts.map((post, index) => (
-            <Post post={post} index={index} key={index} />
+            <Link
+              to={`/post/${index.toString()}`}
+              key={index}
+              style={{ textDecoration: "none" }}
+            >
+              <Post post={post} index={index} />
+            </Link>
           ))}
         </>
       )}

@@ -6,13 +6,13 @@ import type React from "react"
 export default function Community({
   community,
   handleClick,
-  activeCategory,
+  activeCommunity,
   isSearch,
   index,
 }: {
   community: Community
   handleClick: React.MouseEventHandler
-  activeCategory: string
+  activeCommunity: string
   isSearch: boolean
   index: number
 }) {
@@ -27,7 +27,7 @@ export default function Community({
       <div
         onClick={handleClick}
         role="button"
-        className={`btn ${activeCategory === community.name && !isSearch ? "bg-primary text-white" : ""} d-flex align-items-center`}
+        className={`btn ${activeCommunity === community.name && !isSearch ? "bg-primary text-white" : ""} d-flex align-items-center`}
       >
         <CommunityImage name={community.name} imageSrc={community.imageSrc} />
         <p className="m-0 mx-3">{community.name}</p>

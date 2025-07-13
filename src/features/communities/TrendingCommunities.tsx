@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react"
-import { useAppDispatch } from "../../app/hooks.ts"
-import { fetchTrendingCommunities } from "./trendingCommunitiesSlice.ts"
-import { trendingCommunitiesSelector } from "./trendingCommunitiesSlice.ts"
-import { useAppSelector } from "../../app/hooks.ts"
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts"
+import {
+  fetchTrendingCommunities,
+  setActiveCommunity,
+  trendingCommunitiesSelector,
+} from "./trendingCommunitiesSlice.ts"
 import TrendingCommunitiesLoading from "./TrendingCommunitiesLoading.tsx"
 import { fetchPosts } from "../posts/postsSlice.ts"
 import {
@@ -15,16 +17,14 @@ import Community from "./Community.tsx"
 
 export default function TrendingCommunities() {
   const dispatch = useAppDispatch()
-  const [activeCategory, setActiveCategory] = useState("")
-  useEffect(() => {
-    void dispatch(fetchTrendingCommunities())
-  }, [dispatch])
-
-  const { trendingCommunities, isLoading, hasError } = useAppSelector(
-    trendingCommunitiesSelector,
-  )
+  const { trendingCommunities, isLoading, hasError, activeCommunity } =
+    useAppSelector(trendingCommunitiesSelector)
   const { isSearch } = useAppSelector(searchSelector)
-
+  useEffect(() => {
+    if (trendingCommunities.length === 0) {
+      void dispatch(fetchTrendingCommunities())
+    }
+  }, [dispatch, trendingCommunities])
   return (
     <div className="container p-3">
       <div className="row">
@@ -46,11 +46,11 @@ export default function TrendingCommunities() {
                 <Community
                   key={index}
                   community={community}
-                  activeCategory={activeCategory}
+                  activeCommunity={activeCommunity}
                   isSearch={isSearch}
                   index={index}
                   handleClick={() => {
-                    setActiveCategory(community.name)
+                    dispatch(setActiveCommunity(community.name))
                     dispatch(setIsSearch(false))
                     dispatch(setSearch(""))
                     void dispatch(fetchPosts(`${community.name}.json`))

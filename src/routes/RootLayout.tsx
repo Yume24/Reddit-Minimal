@@ -9,7 +9,9 @@ export default function RootLayout() {
           <Navbar />
         </div>
       </div>
-      <Outlet />
+      <main className="row gx-3 gy-3">
+        <Outlet />
+      </main>
     </div>
   )
 }

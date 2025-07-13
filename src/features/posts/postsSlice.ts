@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { RootState } from "../../app/store.ts"
 
 export type Post = {
+  id: number
   title: string
   author: string
   subredditName: string
@@ -50,8 +51,9 @@ const initialState: PostsState = {
 }
 
 function parseData(jsonData: RedditAPIResponse): Post[] {
-  return jsonData.data.children.map(post => {
+  return jsonData.data.children.map((post, index) => {
     return {
+      id: index,
       title: post.data.title,
       author: post.data.author_fullname,
       subredditName: post.data.subreddit_name_prefixed,
@@ -96,11 +98,7 @@ export const fetchPosts = createAsyncThunk<
 const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {
-    clearPosts: state => {
-      state.posts = initialState.posts
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchPosts.pending, state => {
       state.isLoading = true
@@ -118,5 +116,6 @@ const postsSlice = createSlice({
   },
 })
 export const postsSelector = (state: RootState) => state.posts
-export const { clearPosts } = postsSlice.actions
+export const postSelectorById = (state: RootState, id: number) =>
+  state.posts.posts.find(post => post.id === id)
 export default postsSlice

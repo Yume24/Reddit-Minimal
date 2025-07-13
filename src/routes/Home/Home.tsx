@@ -3,7 +3,7 @@ import TrendingCommunities from "../../features/communities/TrendingCommunities.
 
 export default function Home() {
   return (
-    <main className="row gx-3 gy-3">
+    <>
       <div className="col-12 col-lg-9">
         <div className="bg-white shadow rounded-bottom p-5">
           <Posts />
@@ -14,6 +14,6 @@ export default function Home() {
           <TrendingCommunities />
         </div>
       </div>
-    </main>
+    </>
   )
 }

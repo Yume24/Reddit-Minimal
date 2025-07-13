@@ -1,5 +1,5 @@
-import { useState } from "react"
 import type React from "react"
+import { useState } from "react"
 import { useAppDispatch } from "../../app/hooks.ts"
 import { fetchPosts } from "../posts/postsSlice.ts"
 import { setIsSearch, setSearch } from "./searchSlice.ts"

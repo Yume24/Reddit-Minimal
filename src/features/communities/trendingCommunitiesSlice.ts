@@ -10,6 +10,7 @@ type TrendingCommunitiesState = {
   trendingCommunities: Community[]
   isLoading: boolean
   hasError: boolean
+  activeCommunity: string
 }
 type RedditAPIResponse = {
   data: {
@@ -61,14 +62,18 @@ const initialState: TrendingCommunitiesState = {
   trendingCommunities: [],
   isLoading: false,
   hasError: false,
+  activeCommunity: "",
 }
 
 const trendingCommunitiesSlice = createSlice({
   name: "trendingCommunities",
   initialState,
   reducers: {
-    clearCommunities: state => {
-      state.trendingCommunities = initialState.trendingCommunities
+    setActiveCommunity: (state, action: { payload: string }) => {
+      state.activeCommunity = action.payload
+    },
+    clearActiveCommunity: state => {
+      state.activeCommunity = initialState.activeCommunity
     },
   },
   extraReducers: builder => {
@@ -89,5 +94,6 @@ const trendingCommunitiesSlice = createSlice({
 })
 export const trendingCommunitiesSelector = (state: RootState) =>
   state.trendingCommunities
-export const { clearCommunities } = trendingCommunitiesSlice.actions
+export const { setActiveCommunity, clearActiveCommunity } =
+  trendingCommunitiesSlice.actions
 export default trendingCommunitiesSlice
