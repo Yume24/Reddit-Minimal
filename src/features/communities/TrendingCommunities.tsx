@@ -44,6 +44,7 @@ export default function TrendingCommunities() {
             <ul className="list-group">
               {trendingCommunities.map((community, index) => (
                 <Community
+                  key={index}
                   community={community}
                   activeCategory={activeCategory}
                   isSearch={isSearch}
