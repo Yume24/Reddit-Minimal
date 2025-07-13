@@ -72,9 +72,6 @@ const trendingCommunitiesSlice = createSlice({
     setActiveCommunity: (state, action: { payload: string }) => {
       state.activeCommunity = action.payload
     },
-    clearActiveCommunity: state => {
-      state.activeCommunity = initialState.activeCommunity
-    },
   },
   extraReducers: builder => {
     builder.addCase(fetchTrendingCommunities.pending, state => {
@@ -94,6 +91,5 @@ const trendingCommunitiesSlice = createSlice({
 })
 export const trendingCommunitiesSelector = (state: RootState) =>
   state.trendingCommunities
-export const { setActiveCommunity, clearActiveCommunity } =
-  trendingCommunitiesSlice.actions
+export const { setActiveCommunity } = trendingCommunitiesSlice.actions
 export default trendingCommunitiesSlice

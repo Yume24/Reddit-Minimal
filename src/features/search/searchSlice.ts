@@ -16,9 +16,6 @@ const searchSlice = createSlice({
     setSearch: (state, action: { payload: string }) => {
       state.searchTerm = action.payload
     },
-    clearSearch: state => {
-      state.searchTerm = initialState.searchTerm
-    },
     setIsSearch: (state, action: { payload: boolean }) => {
       state.isSearch = action.payload
     },
@@ -26,5 +23,5 @@ const searchSlice = createSlice({
 })
 
 export default searchSlice
-export const { setSearch, setIsSearch, clearSearch } = searchSlice.actions
+export const { setSearch, setIsSearch } = searchSlice.actions
 export const searchSelector = (state: RootState) => state.search
