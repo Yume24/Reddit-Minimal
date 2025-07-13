@@ -8,6 +8,8 @@ type Post = {
   videoUrl?: string | null
   imageUrl?: string
   text: string | null
+  comments: number
+  createdAt: number
 }
 
 type PostsState = {
@@ -23,6 +25,8 @@ type RedditAPIResponse = {
         author_fullname: string
         subreddit_name_prefixed: string
         selftext: string | null
+        num_comments: number
+        created_utc: number
         media: null | {
           reddit_video?: {
             fallback_url: string
@@ -52,10 +56,16 @@ function parseData(jsonData: RedditAPIResponse): Post[] {
       author: post.data.author_fullname,
       subredditName: post.data.subreddit_name_prefixed,
       text: post.data.selftext,
-      videoUrl:
-        post.data.media?.reddit_video?.fallback_url.replaceAll("&amp;", "&"),
-      imageUrl:
-        post.data.preview?.images[0].source.url.replaceAll("&amp;", "&"),
+      comments: post.data.num_comments,
+      createdAt: post.data.created_utc,
+      videoUrl: post.data.media?.reddit_video?.fallback_url.replaceAll(
+        "&amp;",
+        "&",
+      ),
+      imageUrl: post.data.preview?.images[0].source.url.replaceAll(
+        "&amp;",
+        "&",
+      ),
     }
   })
 }
