@@ -1,0 +1,37 @@
+import CommunityImage from "./CommunityImage.tsx"
+import { motion } from "motion/react"
+import type { Community } from "./trendingCommunitiesSlice.ts"
+import type React from "react"
+
+export default function Community({
+  community,
+  handleClick,
+  activeCategory,
+  isSearch,
+  index,
+}: {
+  community: Community
+  handleClick: React.MouseEventHandler
+  activeCategory: string
+  isSearch: boolean
+  index: number
+}) {
+  return (
+    <motion.li
+      key={community.name}
+      className="list-group-item p-0"
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, delay: index * 0.05 }}
+    >
+      <div
+        onClick={handleClick}
+        role="button"
+        className={`btn ${activeCategory === community.name && !isSearch ? "bg-primary text-white" : ""} d-flex align-items-center`}
+      >
+        <CommunityImage name={community.name} imageSrc={community.imageSrc} />
+        <p className="m-0 mx-3">{community.name}</p>
+      </div>
+    </motion.li>
+  )
+}

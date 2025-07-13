@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { RootState } from "../../app/store.ts"
 
-type Post = {
+export type Post = {
   title: string
   author: string
   subredditName: string

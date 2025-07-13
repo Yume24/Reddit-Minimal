@@ -4,15 +4,14 @@ import { fetchTrendingCommunities } from "./trendingCommunitiesSlice.ts"
 import { trendingCommunitiesSelector } from "./trendingCommunitiesSlice.ts"
 import { useAppSelector } from "../../app/hooks.ts"
 import TrendingCommunitiesLoading from "./TrendingCommunitiesLoading.tsx"
-import { motion } from "motion/react"
 import { fetchPosts } from "../posts/postsSlice.ts"
 import {
   searchSelector,
   setIsSearch,
   setSearch,
 } from "../search/searchSlice.ts"
-import CommunityImage from "./CommunityImage.tsx"
 import TrendingCommunitiesError from "./TrendingCommunitiesError.tsx"
+import Community from "./Community.tsx"
 
 export default function TrendingCommunities() {
   const dispatch = useAppDispatch()
@@ -44,30 +43,18 @@ export default function TrendingCommunities() {
           ) : (
             <ul className="list-group">
               {trendingCommunities.map((community, index) => (
-                <motion.li
-                  key={community.name}
-                  className="list-group-item p-0"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.2, delay: index * 0.05 }}
-                >
-                  <div
-                    onClick={() => {
-                      setActiveCategory(community.name)
-                      dispatch(setIsSearch(false))
-                      dispatch(setSearch(""))
-                      void dispatch(fetchPosts(`${community.name}.json`))
-                    }}
-                    role="button"
-                    className={`btn ${activeCategory === community.name && !isSearch ? "bg-primary text-white" : ""} d-flex align-items-center`}
-                  >
-                    <CommunityImage
-                      name={community.name}
-                      imageSrc={community.imageSrc}
-                    />
-                    <p className="m-0 mx-3">{community.name}</p>
-                  </div>
-                </motion.li>
+                <Community
+                  community={community}
+                  activeCategory={activeCategory}
+                  isSearch={isSearch}
+                  index={index}
+                  handleClick={() => {
+                    setActiveCategory(community.name)
+                    dispatch(setIsSearch(false))
+                    dispatch(setSearch(""))
+                    void dispatch(fetchPosts(`${community.name}.json`))
+                  }}
+                />
               ))}
             </ul>
           )}

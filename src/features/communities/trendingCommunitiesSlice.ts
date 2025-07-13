@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { RootState } from "../../app/store"
 
-type Community = {
+export type Community = {
   name: string
   imageSrc: string
   url: string
