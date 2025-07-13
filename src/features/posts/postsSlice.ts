@@ -11,6 +11,7 @@ export type Post = {
   text: string | null
   comments: number
   createdAt: number
+  link: string
 }
 
 type PostsState = {
@@ -28,6 +29,7 @@ type RedditAPIResponse = {
         selftext: string | null
         num_comments: number
         created_utc: number
+        permalink: string
         media: null | {
           reddit_video?: {
             fallback_url: string
@@ -60,6 +62,7 @@ function parseData(jsonData: RedditAPIResponse): Post[] {
       text: post.data.selftext,
       comments: post.data.num_comments,
       createdAt: post.data.created_utc,
+      link: post.data.permalink,
       videoUrl: post.data.media?.reddit_video?.fallback_url.replaceAll(
         "&amp;",
         "&",
