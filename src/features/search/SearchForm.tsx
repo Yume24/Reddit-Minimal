@@ -3,10 +3,12 @@ import type React from "react"
 import { useAppDispatch } from "../../app/hooks.ts"
 import { fetchPosts } from "../posts/postsSlice.ts"
 import { setIsSearch, setSearch } from "./searchSlice.ts"
+import { useNavigate } from "react-router"
 
 export default function SearchForm() {
   const [input, setInput] = useState("")
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setInput(target.value)
   }
@@ -16,6 +18,7 @@ export default function SearchForm() {
     dispatch(setSearch(input))
     void dispatch(fetchPosts(`search.json?q=${input.replaceAll(" ", "%20")}`))
     setInput("")
+    void navigate("/")
   }
   return (
     <form className="d-flex w-100" role="search" onSubmit={handleSubmit}>

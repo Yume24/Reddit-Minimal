@@ -1,30 +1,20 @@
 import './App.css'
-import Navbar from "./components/Navbar";
-import TrendingCommunities from "./features/communities/TrendingCommunities.tsx"
-import Posts from "./features/posts/Posts.tsx"
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router"
+import RootLayout from "./routes/RootLayout.tsx"
+import Home from "./routes/Home/Home.tsx"
+import PostDetails from "./routes/PostDetails/PostDetails.tsx"
+
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element={<RootLayout />}>
+    <Route index={true} element={<Home />} />
+    <Route path="post/:id" element={<PostDetails />} />
+  </Route>
+))
 
 function App() {
-  return (<>
-    <div className="container-fluid mb-5 app">
-      <div className="row my-3">
-        <div className="col">
-          <Navbar/>
-        </div>
-      </div>
-      <main className="row gx-3 gy-3">
-        <div className="col-12 col-lg-9">
-          <div className="bg-white shadow rounded-bottom p-5">
-            <Posts />
-          </div>
-        </div>
-        <div className="col-12 col-lg-3">
-          <div className="bg-white shadow rounded-bottom">
-            <TrendingCommunities />
-          </div>
-        </div>
-      </main>
-    </div>
-  </>)
+  return (
+    <RouterProvider router={router} />
+  )
 }
 
 export default App

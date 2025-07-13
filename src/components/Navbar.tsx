@@ -1,4 +1,5 @@
 import SearchForm from "../features/search/SearchForm"
+import logo from "../logo.svg";
 
 export default function Navbar() {
   return (
@@ -8,7 +9,7 @@ export default function Navbar() {
           <img
             width="48"
             height="48"
-            src="src/logo.svg"
+            src={logo}
             alt="blue reddit logo"
           />
           <span className="d-none d-sm-inline h3 mb-0 mx-3">

@@ -2,9 +2,17 @@ import moment from "moment/moment"
 import PostMedia from "./PostMedia.tsx"
 import { motion } from "motion/react"
 import type { Post } from "./postsSlice.ts"
-import styles from "./posts.module.css";
+import styles from "./posts.module.css"
 
-export default function Post({ post, index }: { post: Post; index: number }) {
+export default function Post({
+  post,
+  index,
+  fadeText = true,
+}: {
+  post: Post
+  index: number
+  fadeText?: boolean
+}) {
   return (
     <motion.div
       className="card mb-5"
@@ -18,7 +26,7 @@ export default function Post({ post, index }: { post: Post; index: number }) {
         <h6 className="card-subtitle mb-2 text-body-secondary">
           {post.author}
         </h6>
-        <p className={`card-text ${styles.fadingText}`}>{post.text}</p>
+        <p className={`card-text ${fadeText ? styles.fadingText : ""}`}>{post.text}</p>
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center text-secondary">
             <svg

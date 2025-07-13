@@ -96,7 +96,11 @@ export const fetchPosts = createAsyncThunk<
 const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    clearPosts: state => {
+      state.posts = initialState.posts
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchPosts.pending, state => {
       state.isLoading = true
@@ -114,4 +118,5 @@ const postsSlice = createSlice({
   },
 })
 export const postsSelector = (state: RootState) => state.posts
+export const { clearPosts } = postsSlice.actions
 export default postsSlice

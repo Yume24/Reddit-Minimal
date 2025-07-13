@@ -16,7 +16,7 @@ export default function Posts() {
 
   return (
     <>
-      {isSearch ? <h3>Search results for: "{searchTerm}"</h3> : null}
+      {isSearch ? <h3 className="h3 mb-4">Search results for: "{searchTerm}"</h3> : null}
       {isLoading ? (
         <PostsLoading />
       ) : hasError ? (
