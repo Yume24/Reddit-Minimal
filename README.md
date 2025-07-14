@@ -1,27 +1,45 @@
-# vite-template-redux
+# Reddit Client Application
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+A responsive and modern Reddit client built using **React**, **Redux**, and **React Router**, styled with **Bootstrap**
+and animated using **Motion**. This application allows users to browse, search, and filter Reddit posts and view
+detailed comments - all using the Reddit API.
 
-```sh
-npx tiged reduxjs/redux-templates/packages/vite-template-redux my-app
-```
+---
 
-## Goals
+## Live Demo
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+[Visit the app](https://your-deployed-app-url.com)
 
-## Scripts
+---
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
+## Technologies Used
 
-## Inspiration
+- **React** - Frontend UI
+- **Redux** - State management
+- **React Router** - Client-side routing
+- **Bootstrap** - Styling and layout
+- **Motion** - Smooth animations
+- **Git** - Version control
 
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+---
+
+## Features
+
+- **Search** Reddit posts by keyword
+- **Browse** posts by popular subreddits
+- **View details** of a post, including comments
+- **Responsive design**: Optimized for mobile and desktop
+- **Smooth** animations and transitions
+
+---
+## Installation
+1. Clone the repo
+`git clone https://github.com/your-username/reddit-client.git`
+
+2. Install dependencies
+`npm install`
+
+3. Start the development server
+`npm run dev`
+
+---
