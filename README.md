@@ -8,7 +8,7 @@ detailed comments - all using the Reddit API.
 
 ## Live Demo
 
-[Visit the app](https://your-deployed-app-url.com)
+[Visit the app](https://reddit-minimal-mocha.vercel.app/)
 
 ---
 
