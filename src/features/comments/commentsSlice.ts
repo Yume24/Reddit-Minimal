@@ -5,6 +5,7 @@ export type Comment = {
   author: string
   content: string
   createdAt: number
+  replies: Comment[]
 }
 
 type CommentsState = {
@@ -16,14 +17,18 @@ type CommentsState = {
 type RedditAPIResponse = {
   data: {
     children: {
+      kind: string
       data: {
         body: string
         author: string
         created_utc: number
+        replies: RedditAPIResponse | string
       }
     }[]
   }
-}[]
+}
+
+type InitialRedditAPIResponse = RedditAPIResponse[]
 
 const initialState: CommentsState = {
   comments: [],
@@ -31,14 +36,20 @@ const initialState: CommentsState = {
   hasError: false,
 }
 
-function parseData(jsonData: RedditAPIResponse): Comment[] {
-  return jsonData[1].data.children.map(comment => {
-    return {
-      author: comment.data.author,
-      content: comment.data.body,
-      createdAt: comment.data.created_utc,
-    }
-  })
+function parseData(jsonData: RedditAPIResponse | string): Comment[] {
+  if (typeof jsonData === "string") {
+    return []
+  }
+  return jsonData.data.children
+    .filter(child => child.kind === "t1")
+    .map(comment => {
+      return {
+        author: comment.data.author,
+        content: comment.data.body,
+        createdAt: comment.data.created_utc,
+        replies: parseData(comment.data.replies),
+      }
+    })
 }
 
 export const fetchComments = createAsyncThunk<
@@ -48,14 +59,14 @@ export const fetchComments = createAsyncThunk<
     rejectValue: string
   }
 >("comments/fetchComments", async (postLink, { rejectWithValue }) => {
-  const url = `https://www.reddit.com${postLink.slice(0, -1)}`
+  const url = `https://www.reddit.com${postLink.slice(0, -1)}.json`
   try {
     const response = await fetch(url)
     if (!response.ok) {
       return rejectWithValue("Error fetching comments")
     }
-    const json = (await response.json()) as RedditAPIResponse
-    return parseData(json)
+    const json = (await response.json()) as InitialRedditAPIResponse
+    return parseData(json[1])
   } catch (error: unknown) {
     if (error instanceof Error) {
       return rejectWithValue(`Error: ${error.message}`)

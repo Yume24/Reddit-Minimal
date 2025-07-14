@@ -19,7 +19,7 @@ export default function Community({
   return (
     <motion.li
       key={community.name}
-      className="list-group-item p-0"
+      className="list-group-item list-group-item-action p-0"
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2, delay: index * 0.05 }}
