@@ -30,7 +30,7 @@ export default function Community({
         className={`btn ${activeCommunity === community.name && !isSearch ? "bg-primary text-white" : ""} d-flex align-items-center`}
       >
         <CommunityImage name={community.name} imageSrc={community.imageSrc} />
-        <p className="m-0 mx-3">{community.name}</p>
+        <p className="m-0 mx-3 text-break">{community.name}</p>
       </div>
     </motion.li>
   )
