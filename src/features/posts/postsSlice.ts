@@ -119,6 +119,6 @@ const postsSlice = createSlice({
   },
 })
 export const postsSelector = (state: RootState) => state.posts
-export const postSelectorById = (state: RootState, id: number) =>
+export const postSelectorById = (id: number) => (state: RootState) =>
   state.posts.posts.find(post => post.id === id)
 export default postsSlice

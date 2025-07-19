@@ -15,7 +15,7 @@ import { useEffect } from "react"
 
 export default function PostDetails() {
   const id = Number(useParams().id)
-  const post = useAppSelector(state => postSelectorById(state, id))
+  const post = useAppSelector(postSelectorById(id))
   const dispatch = useAppDispatch()
   const comments = useAppSelector(commentsSelector)
   useEffect(() => {
